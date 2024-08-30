@@ -1,10 +1,14 @@
 import css from './Contact.module.css'
 import { FaUser } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
-const Contact = ({ contact, onDeleteContact }) => {
-    
+import { apiDeleteContact } from '../../redux/contacts/contactsReducer';
+import { useDispatch } from 'react-redux';
+
+const Contact = ({ contact}) => {
+  const dispatch = useDispatch();
+
     const handleDeleteClick = () => {
-    onDeleteContact(contact.id)
+    dispatch(apiDeleteContact(contact.id))
 }
   return (
       <div className={css.contactWrapper}>

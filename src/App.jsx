@@ -4,7 +4,7 @@ import ContactList from './components/ContactList/ContactList';
 import SearchBox from './components/SearchBox/SearchBox';
 import './App.css'
 import { useDispatch, useSelector } from 'react-redux';
-import {  setContact } from './redux/contacts/contactsReducer';
+import {  apiGetAllContacts, setContact } from './redux/contacts/contactsReducer';
 
 
 const dataUsers = [
@@ -31,10 +31,13 @@ function App() {
   
   const selectContacts = useSelector(state => state.contacts.contacts);
 
+  useEffect(() => {
+    dispatch(apiGetAllContacts());
+},[dispatch])
 
 
-
- useEffect(() => {
+  useEffect(() => {
+   
    const savedContacts = localStorage.getItem('contacts');
    const parsedContact = JSON.parse(savedContacts)
    if (Array.isArray(parsedContact)  && parsedContact.length > 0 ) {

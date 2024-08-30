@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './SearchBox.module.css'
-import { setFilterValue } from '../../redux/filter/filterReducer';
+
+import { apiAddContact } from '../../redux/contacts/contactsReducer';
 
 const SearchBox = () => {
     const dispatch = useDispatch();
@@ -9,7 +10,7 @@ const SearchBox = () => {
   
 
     const handleInputChange = (event) => {
-        dispatch(setFilterValue(event.target.value));
+        dispatch(apiAddContact(event.target.value));
     }
 
     return (
