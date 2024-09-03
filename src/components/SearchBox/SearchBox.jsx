@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './SearchBox.module.css'
-
-import { apiAddContact } from '../../redux/contacts/contactsReducer';
+import { selectFilter } from '../../redux/contacts.selectors';
+import {  fetchContactsByQuery, setFilterValue } from '../../redux/filter/filterReducer';
 
 const SearchBox = () => {
     const dispatch = useDispatch();
-
-    const selectNameFilter= useSelector(state => state.filters.filterValue);
+    const filter = useSelector(selectFilter);
   
 
     const handleInputChange = (event) => {
-        dispatch(apiAddContact(event.target.value));
+        const filterWord = event.target.value;
+        dispatch(setFilterValue(filterWord));
+        dispatch(fetchContactsByQuery(filterWord))
     }
 
     return (
@@ -19,7 +20,7 @@ const SearchBox = () => {
             <br />
             <input type="text" name="searchName" placeholder='Rosie Simpson'
                 className={css.searchField}
-                value={selectNameFilter}
+                value={filter}
                 onChange={handleInputChange}
             />
          </div>  )

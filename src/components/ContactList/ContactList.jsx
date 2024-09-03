@@ -1,29 +1,31 @@
 import css from './ContactList.module.css'
 import Contact from "../Contact/Contact"; 
 import { useDispatch, useSelector } from 'react-redux';
-import { apiDeleteContact } from '../../redux/contacts/contactsReducer';
+import { deleteContact } from '../../redux/contactsOps';
+import {  selectFilteredContacts } from '../../redux/contacts.selectors';
 
 
 const ContactList = () => {
   const dispatch = useDispatch();
   
-  const contacts = useSelector(state => state.contacts.contacts);
-  const selectNameFilter = useSelector(state => state.filters.filterValue);
+
+  const filter = useSelector(selectFilteredContacts);
 
   const handleDeleteContact = (contactId) => {
-    dispatch(apiDeleteContact(contactId));
+    dispatch(deleteContact(contactId));
 
   }
-    const filteredContact = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(selectNameFilter.toLowerCase())
-  );
+
   
   return (
-      <div className={css.contactList}>
-          {filteredContact.map(contact =>
+    <div className={css.contactList}>
+      {filter.length > 0 ?  (filter.map(contact =>
           (<Contact key={contact.id}
             contact={contact}
-            onDeleteContact={handleDeleteContact} />))}
+        onDeleteContact={handleDeleteContact} />))
+           ) :
+            <p>No contacts availible</p>}
+         
     
     </div>
   )
